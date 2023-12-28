@@ -1,3 +1,4 @@
+import { Metadata } from "next"
 import { DatabaseIcon } from "lucide-react"
 
 import { env } from "@/env.mjs"
@@ -10,6 +11,26 @@ import FiveDaysForecast from "@/components/weather/five-day-forcast"
 import ForecastDays from "@/components/weather/forecast-days"
 
 export const revalidate = 60 * 60 * 24
+const defaultCity = "Cluj-Napoca"
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: { city: string }
+}): Promise<Metadata> {
+  const city = await fetch(
+    `https://api.openweathermap.org/geo/1.0/direct?q=${
+      searchParams.city ?? "Cluj-Napoca"
+    }&limit=5&appid=${env.OPEN_WEATHER_API_KEY}`
+  )
+    .then((res) => res.json())
+    .then((res) => res[0])
+
+  return {
+    title: `${city.name} - Weather Forecast`,
+    description: `${city.name} weather forecast with current conditions, wind, air quality, and what to expect for the next 3 days.`,
+  }
+}
 
 export default async function Home({
   searchParams,
