@@ -7,26 +7,29 @@ import IconComponent from "../ui/icon-component"
 
 interface CurrentWeatherProps {
   data: HourlyForecastData
-  name: string
+  city: City
   timezone: number
+  locale: string
 }
 
 export default function CurrentWeather({
   data,
-  name,
+  city,
   timezone,
+  locale,
 }: CurrentWeatherProps) {
   const initial = new Date()
+
   return (
     <Card className="relative flex h-fit w-full shrink-0 flex-col justify-between overflow-hidden p-4 md:h-[25rem]">
       <div className="absolute " />
       <div>
-        <div className="flex justify-between text-lg font-semibold">
-          <span>{convertToDate(timezone, data.dt, "long")}</span>
-          <Clock initial={initial} timezone={timezone} />
+        <div className="flex justify-between text-lg font-semibold capitalize">
+          <span>{convertToDate(timezone, data.dt, "long", locale)}</span>
+          <Clock locale={locale} initial={initial} timezone={timezone} />
         </div>
         <div className="text-md mt-2 flex font-bold">
-          <span>{name}</span>
+          <span>{city.local_names?.[locale] ?? city.name}</span>
           <i>
             <svg
               viewBox="0 0 24 24"
@@ -58,7 +61,9 @@ export default function CurrentWeather({
           x={data.sys.pod}
           className="h-9 w-9"
         />
-        <div className="font-semibold">{data.weather[0].main}</div>
+        <div className="font-semibold capitalize">
+          {data.weather[0].description}
+        </div>
         <div className="flex gap-2 dark:text-neutral-500">
           <span>H: {Math.round(data.main.temp_max)}&deg;</span>
           <span>L: {Math.round(data.main.temp_min)}&deg;</span>

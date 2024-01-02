@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server"
+
 import { env } from "@/env.mjs"
 import { convertToDate } from "@/lib/dateUtils"
 import { City, HourlyForecastData } from "@/lib/types"
@@ -7,17 +9,24 @@ import IconComponent from "../ui/icon-component"
 import { Separator } from "../ui/separator"
 import { TemperatureRange } from "../ui/temperature-range"
 
-export default async function FiveDaysForecast({ city }: { city: City }) {
+export default async function FiveDaysForecast({
+  city,
+  locale,
+}: {
+  city: City
+  locale: string
+}) {
   const data = (await fetch(
     `https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&units=metric&appid=${env.OPEN_WEATHER_API_KEY}`
   ).then((res) => res.json())) as {
     list: HourlyForecastData[]
     city: { timezone: number }
   }
+  const t = await getTranslations("forecast")
 
   const groupedDays = data.list.reduce(
     (prev, item) => {
-      const day = convertToDate(data.city.timezone, item.dt, "short")
+      const day = convertToDate(data.city.timezone, item.dt, "short", locale)
       const existingDayIndex = prev.findIndex((item) => item.day === day)
       if (existingDayIndex !== -1)
         prev[existingDayIndex] = {
@@ -34,7 +43,7 @@ export default async function FiveDaysForecast({ city }: { city: City }) {
       else
         prev.push({
           day,
-          time: convertToDate(data.city.timezone, item.dt, "short"),
+          time: convertToDate(data.city.timezone, item.dt, "short", locale),
           min_temp: item.main.temp,
           max_temp: item.main.temp,
           weatherCode: item.weather[0].id,
@@ -144,7 +153,7 @@ export default async function FiveDaysForecast({ city }: { city: City }) {
                 />
               </svg>
             </i>
-            5-Day Forecast
+            {t("five-days")}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-2 text-base font-normal md:mb-1">

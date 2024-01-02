@@ -1,5 +1,40 @@
 {
-  "Index": {
-    "title": "Hello world!"
+  "city": {
+    "search": "Caută orașe...",
+    "placeholder": "Oraș...",
+    "no-results": "Niciun rezultat găsit.",
+    "suggestions": "Sugestii",
+    "custom": "Personalizat"
+  },
+  "theme": {
+    "toggle": "Comută temă",
+    "light": "Luminos",
+    "dark": "Întunecat",
+    "system": "Sistem"
+  },
+  "lang": {
+    "toggle": "Comută limbă",
+    "ro": "Română",
+    "en": "Engleză"
+  },
+  "metadata": {
+    "title": "Prognoza Meteo",
+    "description": "prognoza meteo cu condițiile actuale, vânt, calitatea aerului și ce să vă așteptați pentru următoarele 3 zile."
+  },
+  "pollution": {
+    "air": "Poluare aer",
+    "good": "Calitatea aerului este bună.",
+    "moderate": "Calitatea aerului este acceptabilă.",
+    "low-risk": "Calitatea aerului este nesănătoasă pentru grupurile sensibile.",
+    "unhealthy": "Calitatea aerului este nesănătoasă",
+    "very-unhealthy": "Calitatea aerului este foarte nesănătoasă.",
+    "hazardous": "Calitatea aerului este periculoasă."
+  },
+  "forecast": {
+    "now": "Acum",
+    "five-days": "Prognoza pe 5 zile"
+  },
+  "footer": {
+    "from": "Date de la"
   }
 }

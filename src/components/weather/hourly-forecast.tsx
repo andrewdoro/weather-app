@@ -1,5 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+
 import { HourlyForecastData } from "@/lib/types"
 
 import { Card } from "../ui/card"
@@ -10,6 +12,7 @@ interface HourlyForecastProps {
 }
 
 export default function HourlyForecast({ data }: HourlyForecastProps) {
+  const t = useTranslations("forecast")
   function extractHoursFromDate(dt: number): number {
     const date = new Date(dt * 1000)
     return date.getHours()
@@ -24,7 +27,7 @@ export default function HourlyForecast({ data }: HourlyForecastProps) {
         {data.slice(0, 12).map((item: HourlyForecastData, i) => (
           <div key={item.dt} className="flex h-full flex-col justify-between">
             <div className="flex justify-center text-sm text-neutral-600 dark:text-neutral-400">
-              {i === 0 ? "Now" : extractHoursFromDate(item.dt)}
+              {i === 0 ? t("now") : extractHoursFromDate(item.dt)}
             </div>
             <div className="flex h-full items-center justify-center">
               <IconComponent

@@ -1,4 +1,6 @@
 import React from "react"
+import { useTranslations } from "next-intl"
+import { getTranslations } from "next-intl/server"
 import { ClassNameValue } from "tailwind-merge"
 
 import { env } from "@/env.mjs"
@@ -27,6 +29,7 @@ export default async function AirPollution({
     `http://api.openweathermap.org/data/2.5/air_pollution?lat=${city.lat}&lon=${city.lon}&appid=${env.OPEN_WEATHER_API_KEY}`
   ).then((res) => res.json())) as AirPollutionResponse
   const airQuality = data.list[0]
+  const t = await getTranslations("pollution")
   return (
     <Card
       className={cn(
@@ -79,7 +82,7 @@ export default async function AirPollution({
               />
             </svg>
           </i>
-          Air pollution
+          {t("air")}
         </CardTitle>
       </CardHeader>
       <CardContent className="my-auto">
@@ -88,16 +91,16 @@ export default async function AirPollution({
       <CardFooter>
         <p>
           {airQuality.main.aqi < 50
-            ? "Air quality is good."
+            ? t("good")
             : airQuality.main.aqi < 100
-              ? "Air quality is moderate."
+              ? t("moderate")
               : airQuality.main.aqi < 150
-                ? "Air quality is unhealthy for sensitive groups."
+                ? t("low-risk")
                 : airQuality.main.aqi < 200
-                  ? "Air quality is unhealthy."
+                  ? t("unhealthy")
                   : airQuality.main.aqi < 300
-                    ? "Air quality is very unhealthy."
-                    : "Air quality is hazardous."}
+                    ? t("very-unhealthy")
+                    : t("hazardous")}
         </p>
       </CardFooter>
     </Card>

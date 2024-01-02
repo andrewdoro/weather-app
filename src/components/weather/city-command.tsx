@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { useTranslations } from "next-intl"
 
 import { Button } from "../ui/button"
 import {
@@ -46,13 +47,14 @@ const defaultCities = [
   },
 ]
 
-export function CityCommand() {
+export function CityCommand({ locale }: { locale: "en" | "ro" }) {
   const [inputValue, setInputValue] = useState("")
   const [open, setOpen] = useState(false)
 
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const t = useTranslations("city")
 
   // Get a new searchParams string by merging the current
   // searchParams with a provided key/value pair
@@ -86,7 +88,7 @@ export function CityCommand() {
         className="h-9  whitespace-nowrap px-4"
       >
         <p className="text-sm text-muted-foreground">
-          Search city...{" "}
+          {t("search")}{" "}
           <kbd className="pointer-events-none ml-auto inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 hover:bg-primary md:ml-28">
             <span className="text-xs">⌘</span>J
           </kbd>
@@ -96,11 +98,11 @@ export function CityCommand() {
         <CommandInput
           value={inputValue}
           onValueChange={setInputValue}
-          placeholder="Search city..."
+          placeholder={t("placeholder")}
         />
         <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Suggestions">
+          <CommandEmpty>{t("no-results")}</CommandEmpty>
+          <CommandGroup heading={t("suggestions")}>
             {defaultCities.map((city) => (
               <CommandItem
                 key={city.name}
@@ -111,12 +113,12 @@ export function CityCommand() {
                   )
                 }}
               >
-                {city.name}
+                {city.local_names?.[locale] ?? city.name}
               </CommandItem>
             ))}
           </CommandGroup>
           {inputValue.length > 0 && (
-            <CommandGroup heading="Custom">
+            <CommandGroup heading={t("custom")}>
               <CommandItem
                 onSelect={() => {
                   setOpen(false)

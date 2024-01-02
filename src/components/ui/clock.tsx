@@ -5,9 +5,10 @@ import { useEffect, useState } from "react"
 interface ClockProps {
   initial: Date
   timezone: number
+  locale: string
 }
 
-export default function Clock({ initial, timezone }: ClockProps) {
+export default function Clock({ initial, timezone, locale }: ClockProps) {
   const [time, setTime] = useState(calculateLocalTime(initial, timezone))
 
   useEffect(() => {
@@ -26,7 +27,7 @@ export default function Clock({ initial, timezone }: ClockProps) {
 
   return (
     <div className="tabular-nums">
-      {time.toLocaleTimeString("en-US", {
+      {time.toLocaleTimeString(locale === "en" ? "en-US" : "ro-RO", {
         timeZone: "UTC",
         hour12: true,
         hour: "numeric",
