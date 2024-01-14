@@ -19,7 +19,6 @@ export default function RootLayout({
   params: { locale },
 }: RootLayoutProps) {
   const messages = useMessages()
-
   return (
     <html lang={locale}>
       <head />

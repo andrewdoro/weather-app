@@ -17,7 +17,7 @@ export default async function FiveDaysForecast({
   locale: string
 }) {
   const data = (await fetch(
-    `https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&units=metric&appid=${env.OPEN_WEATHER_API_KEY}`
+    `https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&units=metric&appid=${env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY}`
   ).then((res) => res.json())) as {
     list: HourlyForecastData[]
     city: { timezone: number }

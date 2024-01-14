@@ -82,6 +82,7 @@ export function CityCommand({ locale }: { locale: "en" | "ro" }) {
   return (
     <>
       <Button
+        id="city-command"
         variant={"outline"}
         size={"lg"}
         onClick={() => setOpen(true)}

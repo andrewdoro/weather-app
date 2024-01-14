@@ -26,7 +26,7 @@ export default async function AirPollution({
   className,
 }: AirPollutionProps) {
   const data = (await fetch(
-    `http://api.openweathermap.org/data/2.5/air_pollution?lat=${city.lat}&lon=${city.lon}&appid=${env.OPEN_WEATHER_API_KEY}`
+    `http://api.openweathermap.org/data/2.5/air_pollution?lat=${city.lat}&lon=${city.lon}&appid=${env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY}`
   ).then((res) => res.json())) as AirPollutionResponse
   const airQuality = data.list[0]
   const t = await getTranslations("pollution")

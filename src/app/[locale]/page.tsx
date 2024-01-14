@@ -28,7 +28,7 @@ export async function generateMetadata({
   const city = await fetch(
     `https://api.openweathermap.org/geo/1.0/direct?q=${
       searchParams.city ?? "Cluj-Napoca"
-    }&limit=5&appid=${env.OPEN_WEATHER_API_KEY}`
+    }&limit=5&appid=${env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY}`
   )
     .then((res) => res.json())
     .then((res) => res[0])
@@ -49,12 +49,13 @@ export default async function Home({
   const data = await fetch(
     `https://api.openweathermap.org/geo/1.0/direct?q=${
       searchParams.city ?? "Cluj-Napoca"
-    }&limit=5&appid=${env.OPEN_WEATHER_API_KEY}`
+    }&limit=5&appid=${env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY}`
   )
     .then((res) => res.json())
     .then((res) => res[0])
+
   const currentWeather = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${data.lat}&lon=${data.lon}&lang=${params.locale}&units=metric&appid=${env.OPEN_WEATHER_API_KEY}`
+    `https://api.openweathermap.org/data/2.5/weather?lat=${data.lat}&lon=${data.lon}&lang=${params.locale}&units=metric&appid=${env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY}`
   ).then((res) => res.json())
 
   const t = await getTranslations("footer")
